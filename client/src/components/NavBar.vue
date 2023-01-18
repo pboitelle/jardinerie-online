@@ -29,7 +29,7 @@ import { RouterLink } from 'vue-router'
                         <RouterLink to="#" class="nav-link">Marché des plantes</RouterLink>
                     </li>
                     <li class="nav-item">
-                        <RouterLink to="/blog" class="nav-link">Blog</RouterLink>
+                        <RouterLink to="#" class="nav-link">Blog</RouterLink>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
