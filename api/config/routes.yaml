@@ -1,5 +1,8 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+# api/config/routes.yaml
+auth:
+    path: /auth
+    methods: ['POST']
+
+# config/routes.yaml
+api_login_check:
+    path: /api/login_check
