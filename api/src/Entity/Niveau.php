@@ -24,7 +24,7 @@ class Niveau
     #[ORM\Column]
     private ?int $taux_drop = null;
 
-    #[ORM\ManyToOne(inversedBy: 'niveau')]
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Item $item = null;
 
     public function getId(): ?int

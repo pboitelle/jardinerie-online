@@ -29,13 +29,9 @@ class Item
     #[ORM\OneToMany(mappedBy: 'item', targetEntity: Plante::class)]
     private Collection $plant;
 
-    #[ORM\OneToMany(mappedBy: 'item', targetEntity: Niveau::class)]
-    private Collection $niveau;
-
     public function __construct()
     {
         $this->plant = new ArrayCollection();
-        $this->niveau = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -103,36 +99,6 @@ class Item
             // set the owning side to null (unless already changed)
             if ($plant->getItem() === $this) {
                 $plant->setItem(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Niveau>
-     */
-    public function getNiveau(): Collection
-    {
-        return $this->niveau;
-    }
-
-    public function addNiveau(Niveau $niveau): self
-    {
-        if (!$this->niveau->contains($niveau)) {
-            $this->niveau->add($niveau);
-            $niveau->setItem($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNiveau(Niveau $niveau): self
-    {
-        if ($this->niveau->removeElement($niveau)) {
-            // set the owning side to null (unless already changed)
-            if ($niveau->getItem() === $this) {
-                $niveau->setItem(null);
             }
         }
 
