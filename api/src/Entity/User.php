@@ -19,10 +19,10 @@ class User
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $lastname = null;
+    private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $firstname = null;
+    private ?string $password = null;
 
     #[ORM\Column]
     private ?int $nb_coin = null;
@@ -53,26 +53,26 @@ class User
         return $this->id;
     }
 
-    public function getLastname(): ?string
+    public function getEmail(): ?string
     {
-        return $this->lastname;
+        return $this->email;
     }
 
-    public function setLastname(string $lastname): self
+    public function setEmail(string $email): self
     {
-        $this->lastname = $lastname;
+        $this->email = $email;
 
         return $this;
     }
 
-    public function getFirstname(): ?string
+    public function getPassword(): ?string
     {
-        return $this->firstname;
+        return $this->password;
     }
 
-    public function setFirstname(string $firstname): self
+    public function setPassword(string $password): self
     {
-        $this->firstname = $firstname;
+        $this->password = $password;
 
         return $this;
     }
