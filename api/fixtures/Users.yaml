@@ -1,0 +1,7 @@
+App\Entity\User:
+    user_{3}:
+        lastname: <lastName()>
+        firstname: <firstName()>
+        email: <email()>
+        password: <password()>
+        roles: <randomElements(['ROLE_USER'])>
