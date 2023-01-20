@@ -2,13 +2,14 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
+import GardenView from '../views/GardenView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'login',
       component: LoginView
     },
     {
@@ -23,6 +24,11 @@ const router = createRouter({
       path: '/blog',
       name: 'blog',
       component: () => import('../views/BlogView.vue')
+    },
+    {
+      path: '/garden',
+      name: 'garden',
+      component: GardenView
     },
     {
       path: '/blog/:id',

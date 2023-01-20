@@ -55,6 +55,9 @@ import { RouterLink } from 'vue-router'
 </template>
 
 <style scoped>
+    .navbar{
+        height: 8vh;
+    }
     .navbar-brand img{
         width: 50px;
     }
