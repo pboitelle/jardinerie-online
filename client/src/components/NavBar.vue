@@ -29,7 +29,10 @@ import { RouterLink } from 'vue-router'
                         <RouterLink to="#" class="nav-link">Marché des plantes</RouterLink>
                     </li>
                     <li class="nav-item">
-                        <RouterLink to="#" class="nav-link">Blog</RouterLink>
+                        <RouterLink to="/blog" class="nav-link">Blog</RouterLink>
+                    </li>
+                    <li class="nav-item">
+                        <RouterLink to="/coins" class="nav-link" style="color: yellow;">Acheter des coins</RouterLink>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -46,8 +49,6 @@ import { RouterLink } from 'vue-router'
 
                 <!-- afficher le bouton se connecter ou le bouton deconnexion -->
                 
-
-                <RouterLink to="/login" class="btn btn-outline-light">Se connecter</RouterLink>
 
             </div>
         </div>
