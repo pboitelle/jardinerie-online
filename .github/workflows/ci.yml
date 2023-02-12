@@ -48,7 +48,7 @@
 #        run: docker compose exec -T php bin/console doctrine:schema:validate --skip-sync
 
 
-name: Publish docker image
+#name: Publish docker image
 
 on:
   push:
