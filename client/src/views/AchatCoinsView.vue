@@ -1,6 +1,7 @@
 <script>
 import NavBar from '@/components/NavBar.vue'
 import ListCards from '@/components/ListCards.vue'
+import axios from 'axios';
 
 export default {
   name: 'AchatCoinsView',
@@ -13,13 +14,27 @@ export default {
       title: 'Achat de coins',
       items1: [
         { id: 1, text: "Achat de 10 coins", img: "/src/assets/img/coin.png" },
-        { id: 2, text: "Achat de 20 coins", img: "src/assets/img/coin.png" },
-        { id: 3, text: "Achat de 30 coins", img: "src/assets/img/coin.png" }
+        { id: 2, text: "Achat de 20 coins", img: "/src/assets/img/coin.png" },
+        { id: 3, text: "Achat de 30 coins", img: "/src/assets/img/coin.png" }
       ],
     }
   },
   methods: {
-    
+    handleAchatCoins: async function (item) {
+      console.log(item.id)
+      try {
+        const response = await axios.patch('https://localhost:80/users/achat-coins/'+ 1, {
+          headers: {
+            'Content-Type': 'application/merge-patch+json',
+            'accept': 'application/ld+json'
+          }
+        });
+        this.data = response.data;
+        console.log(this.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
   }
 }
 </script>
@@ -30,7 +45,7 @@ export default {
  
   <div class="container">
     <h1>{{ title }}</h1>
-    <ListCards :items="items1" />
+    <ListCards :items="items1" @click="handleAchatCoins" />
   </div>
 
 

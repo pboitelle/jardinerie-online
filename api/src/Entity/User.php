@@ -15,8 +15,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: '`user`')]
 #[Patch(
     uriTemplate: '/users/achat-coins/{id}',
-    normalizationContext: ['groups' => ['user:read']],
-    denormalizationContext: ['groups' => ['user:write']],
     name: 'app_user_achat_coins',
 )]
 
