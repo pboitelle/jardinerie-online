@@ -1,48 +1,140 @@
-name: CI
+#name: CI
+
+#on:
+#  push:
+#    branches:
+#      - main
+#  pull_request: ~
+#  workflow_dispatch: ~
+
+#jobs:
+#  tests:
+#    name: Tests
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v2
+#      - name: Pull images
+#        run: docker compose pull --ignore-pull-failures || true
+#      - name: Start services
+#        run: docker compose up --build -d
+#      - name: Wait for services
+#        run: |
+#          while status="$(docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" "$(docker compose ps -q php)")"; do
+#            case $status in
+#              starting) sleep 1;;
+#              healthy) exit 0;;
+#              unhealthy)
+#                docker compose ps
+#                docker compose logs
+#                exit 1
+#              ;;
+#            esac
+#          done
+#          exit 1
+#      - name: Check HTTP reachability
+#        run: curl -v -o /dev/null http://localhost
+#      - name: Check API reachability
+#        run: curl -vk -o /dev/null https://localhost
+#      - name: Check PWA reachability
+#        run: "curl -vk -o /dev/null -H 'Accept: text/html' https://localhost"
+#      - name: Create test database
+#        run: |
+#          docker compose exec -T php bin/console -e test doctrine:database:create
+#          docker compose exec -T php bin/console -e test doctrine:migrations:migrate --no-interaction
+#      - name: PHPUnit
+#        run: docker compose exec -T php bin/phpunit
+#      - name: Doctrine Schema Validator
+#        run: docker compose exec -T php bin/console doctrine:schema:validate --skip-sync
+
+
+#name: Publish docker image
 
 on:
   push:
-    branches:
-      - main
-  pull_request: ~
-  workflow_dispatch: ~
 
 jobs:
-  tests:
-    name: Tests
+  test-and-build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Pull images
-        run: docker compose pull --ignore-pull-failures || true
-      - name: Start services
-        run: docker compose up --build -d
-      - name: Wait for services
-        run: |
-          while status="$(docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" "$(docker compose ps -q php)")"; do
-            case $status in
-              starting) sleep 1;;
-              healthy) exit 0;;
-              unhealthy)
-                docker compose ps
-                docker compose logs
-                exit 1
-              ;;
-            esac
-          done
-          exit 1
-      - name: Check HTTP reachability
-        run: curl -v -o /dev/null http://localhost
-      - name: Check API reachability
-        run: curl -vk -o /dev/null https://localhost
-      - name: Check PWA reachability
-        run: "curl -vk -o /dev/null -H 'Accept: text/html' https://localhost"
-      - name: Create test database
-        run: |
-          docker compose exec -T php bin/console -e test doctrine:database:create
-          docker compose exec -T php bin/console -e test doctrine:migrations:migrate --no-interaction
-      - name: PHPUnit
-        run: docker compose exec -T php bin/phpunit
-      - name: Doctrine Schema Validator
-        run: docker compose exec -T php bin/console doctrine:schema:validate --skip-sync
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: docker build up -d
+      run: cd client
+      run: npm install
+      run: 
+        # install any necessary dependencies here
+        # example: npm install
+
+    - name: Run tests
+      run: |
+        # run tests here
+        # example: npm test
+    
+    - name: Build project
+      run: npm run dev
+        # build your project here
+        # example: npm run build
+
+    - name: Deploy
+      run: |
+        # deploy your project here
+        # example: scp -r build user@server:/path/to/deploy
+
+  example:
+    working_directory: .
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set environment variables
+      run: |
+        echo "API_URL=${{ secrets.API_URL }}" >> $GITHUB_ENV
+        echo "API_TOKEN=${{ secrets.API_TOKEN }}" >> $GITHUB_ENV
+
+    - name: Print environment variables
+      run: |
+        echo "API_URL=$API_URL"
+        echo "API_TOKEN=$API_TOKEN"
+
+  build-test: 
+    runs-on: ubuntu-latest
+
+    steps: 
+      - uses: actions/checkout@v3
+      
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+  
+
+  publish-docker:
+    runs-on: ubuntu-latest
+    steps:
+    -
+      name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+    -
+      name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    -
+      name: Login to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: pboitelle
+        password: ${{ secrets.DOCKER_APP }}
+    -
+      name: Build and push
+      uses: docker/build-push-action@v3
+      with:
+        push: true
+        platforms: linux/amd64,linux/arm64
+        tags: pboitelle/app:latest
+
