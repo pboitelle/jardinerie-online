@@ -1,0 +1,8 @@
+# api/config/routes.yaml
+auth:
+    path: /auth
+    methods: ['POST']
+
+# config/routes.yaml
+api_login_check:
+    path: /api/login_check
