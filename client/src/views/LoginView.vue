@@ -1,17 +1,12 @@
 <script>
 import {ref} from 'vue'
 import axios from 'axios'
-import {getUsers} from '../services/UserService'
 
 export default {
   name: 'LoginView',
   setup() {
     const email = ref('')
     const password = ref('')
-
-    // getUsers().then(res => {
-    //   console.log(res)
-    // })
 
     const login = async () => {
       const response = await axios.post('http://localhost:9000/api/auth', JSON.stringify({

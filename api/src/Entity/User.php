@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Get;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -11,6 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
 #[ApiResource()]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[Patch(
+    uriTemplate: '/users/achat-coins/{id}',
+    normalizationContext: ['groups' => ['user:read']],
+    denormalizationContext: ['groups' => ['user:write']],
+    name: 'app_user_achat_coins',
+)]
+
 class User
 {
     #[ORM\Id]
