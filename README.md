@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# jardinerie-online
-Plateforme de jardinage en ligne : Créez une plateforme où les utilisateurs peuvent planter virtuellement leur propre jardin. Les utilisateurs pourraient également échanger des graines ou des plantes en ligne gràce à un système de monnaie virtuelle.
-=======
 <h1 align="center"><a href="https://api-platform.com"><img src="https://api-platform.com/logo-250x250.png" alt="API Platform"></a></h1>
 
 API Platform is a next-generation web framework designed to easily create API-first projects without compromising extensibility
@@ -52,4 +48,3 @@ It means that you can:
 ## Credits
 
 Created by [Kévin Dunglas](https://dunglas.fr). Commercial support available at [Les-Tilleuls.coop](https://les-tilleuls.coop).
->>>>>>> f429f501142bbbe9e503b8ce398faf21934236c2
