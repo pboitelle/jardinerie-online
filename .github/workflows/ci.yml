@@ -45,6 +45,7 @@ jobs:
       with:
         username: pboitelle
         password: ${{ secrets.DOCKER_APP }}
+    - name: Checkout code
       run: docker build up -d
 
   example:
@@ -63,21 +64,6 @@ jobs:
         echo "API_URL=$API_URL"
         echo "API_TOKEN=$API_TOKEN"
 
-  build-test: 
-    runs-on: ubuntu-latest
-
-    steps: 
-      - uses: actions/checkout@v3
-      
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
-
-      - run: npm ci
-      - run: npm run build
-      - run: npm test
-  
 
   publish-docker:
     runs-on: ubuntu-latest
