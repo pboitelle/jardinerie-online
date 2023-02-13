@@ -13,7 +13,7 @@ export default {
   methods: {
     async submitForm() {
       try {
-        const response = await axios.get('https://localhost/plantes', {
+        const response = await axios.get('https://localhost/register', {
           'headers': {
             'Content-Type': 'application/json',
             'accept': 'application/json'
