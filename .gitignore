@@ -1,4 +1,7 @@
-/.env
+/api/.env
 /helm/api-platform/charts/*
 !/helm/api-platform/charts/.gitignore
-/.github/*  # GitHub Actions
+/docker-compose.yml
+/docker-compose.override.yml
+/docker-compose.test.yml
+/docker-compose.prod.yml

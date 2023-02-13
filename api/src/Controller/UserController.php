@@ -3,29 +3,40 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[AsController]
 class UserController extends AbstractController
 {
-    #[Route('/api/users/achat-coins/{id}', name: 'app_user_achat_coins', methods: ['PATCH'])]
-    public function achatCoins(Request $request, ValidatorInterface $validator, User $user)
+    public function __construct(
+        private RequestStack $requestStack,
+        private ManagerRegistry $managerRegistry
+    ) {}
+
+    public function __invoke()
     {
-        $data = json_decode($request->getContent(), true);
+        $request = $this->requestStack->getCurrentRequest();
+        $user = $this->managerRegistry->getRepository(User::class)->find($request->get('id'));
 
-        $user->setNbCoin($data['nb_coin']);
 
-        $errors = $validator->validate($user);
-        if (count($errors) > 0) {
-            return new JsonResponse(['error' => (string) $errors], 400);
+        $user->setNbCoin($user->getNbCoin() + 10);
+
+        $em = $this->managerRegistry->getManager();
+
+        if (!$user) {
+            return $this->createNotFoundException();
         }
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->flush();
+        $em->persist($user);
+        $em->flush();
 
-        return new JsonResponse(['id' => $user->getId()]);
+        return $this->json([
+            'code' => 200,
+            'message' => 'success',
+            'data' => $user
+        ]);
     }
 }

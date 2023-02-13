@@ -25,26 +25,25 @@ final class ConfirmationAchatCoinsMailSubscriber implements EventSubscriberInter
     public static function getSubscribedEvents()
     {
         return [
-            JsonResponse::class => 'sendMail',
+            KernelEvents::VIEW => ['sendMail', EventPriorities::POST_WRITE],
         ];
     }
 
-    public function sendMail(JsonResponse $response): void
+    public function sendMail(ViewEvent $event): void
     {
-        $data = $response->getData();
+        $user = $event->getControllerResult();
+        $method = $event->getRequest()->getMethod();
 
-        if (isset($data['id'])) {
-            // $user = $this->getDoctrine()->getRepository(User::class)->find($data['id']);
-
-            $message = (new Email())
-                ->from('
-                pierre.boitelle@gmail.com')
-                ->to('
-                pierre.boitelle@gmail.com')
-                ->subject('Vous venez d\'acheter des coins')
-                ->text('Vous venez d\'acheter des coins');
-
-            $this->mailer->send($message);
+        if (!$user instanceof User || Request::METHOD_PATCH !== $method) {
+            return;
         }
+
+        $message = (new Email())
+            ->from('pierre.boitelle@gmail.com')
+            ->to('pierre.boitelle@gmail.com')
+            ->subject('New coins !')
+            ->text('You have new coins !');
+
+        $this->mailer->send($message);
     }
 }

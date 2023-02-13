@@ -6,10 +6,10 @@ function createRequest() {
     });
 }
 
-export async function getUsers() {
+export async function getPlantes() {
     const request = createRequest();
 
-    const response = await request.get("/api/users");
+    const response = await request.get("/api/plantes");
 
     return response.data;
 }
