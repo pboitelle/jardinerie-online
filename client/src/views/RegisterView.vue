@@ -11,7 +11,7 @@ export default {
     }
   },
   methods: {
-    async function (submitForm) {
+    async submitForm() {
       try {
         const response = await axios.get('https://localhost/plantes', {
           'headers': {
