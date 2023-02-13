@@ -1,4 +1,4 @@
-/.env
+/api/.env
 /helm/api-platform/charts/*
 !/helm/api-platform/charts/.gitignore
 /docker-compose.yml

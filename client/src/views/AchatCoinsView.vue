@@ -12,7 +12,7 @@ export default {
   data () {
     return {
       title: 'Achat de coins',
-      items1: [
+      items: [
         { id: 1, text: "Achat de 10 coins", img: "/src/assets/img/coin.png" },
         { id: 2, text: "Achat de 20 coins", img: "/src/assets/img/coin.png" },
         { id: 3, text: "Achat de 30 coins", img: "/src/assets/img/coin.png" }
@@ -28,9 +28,10 @@ export default {
             'Content-Type': 'application/json',
             'accept': 'application/json'
           }
-        });
-        this.data = response.data;
-        console.log(this.data);
+        }, JSON.stringify({
+          'item': item.id
+        }));
+        console.log(response.data);
       } catch (error) {
         console.error(error);
       }
@@ -45,7 +46,7 @@ export default {
  
   <div class="container">
     <h1>{{ title }}</h1>
-    <ListCards :items="items1" @click="handleAchatCoins" />
+    <ListCards :items="items" @click="handleAchatCoins" />
   </div>
 
 

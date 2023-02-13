@@ -3,11 +3,6 @@ export default {
   name: "ListComponent",
   data() {
     return {
-      items: [
-        { id: 1, text: "Item 1", img: "" },
-        { id: 2, text: "Item 2", img: "" },
-        { id: 3, text: "Item 3", img: "" }
-      ]
     };
   },
   props: {

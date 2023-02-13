@@ -12,16 +12,17 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ApiResource(
-    normalizationContext: ['groups' => ['read']],
-    denormalizationContext: ['groups' => ['write']],
-)]
+#[ApiResource]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[Patch(
     uriTemplate: '/users/achat-coins/{id}',
     controller: UserController::class,
     name: 'user_achat_coins',
+    normalizationContext: ['groups' => ['read']],
+    denormalizationContext: ['groups' => ['write']],
+    inputFormats: ['json' => ['application/json']],
+    outputFormats: ['json' => ['application/json']],
 )]
 
 class User

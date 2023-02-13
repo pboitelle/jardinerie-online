@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,13 +21,22 @@ class UserController extends AbstractController
         $request = $this->requestStack->getCurrentRequest();
         $user = $this->managerRegistry->getRepository(User::class)->find($request->get('id'));
 
+
         $user->setNbCoin($user->getNbCoin() + 10);
 
         $em = $this->managerRegistry->getManager();
 
+        if (!$user) {
+            return $this->createNotFoundException();
+        }
+
         $em->persist($user);
         $em->flush();
 
-        return new JsonResponse(['user' => $user]);
+        return $this->json([
+            'code' => 200,
+            'message' => 'success',
+            'data' => $user
+        ]);
     }
 }
