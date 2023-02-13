@@ -23,10 +23,10 @@ export default {
     handleAchatCoins: async function (item) {
       console.log(item.id)
       try {
-        const response = await axios.patch('https://localhost:80/users/achat-coins/'+ 1, {
-          headers: {
-            'Content-Type': 'application/merge-patch+json',
-            'accept': 'application/ld+json'
+        const response = await axios.patch('https://localhost/users/achat-coins/' + 1, {
+          'headers': {
+            'Content-Type': 'application/json',
+            'accept': 'application/json'
           }
         });
         this.data = response.data;

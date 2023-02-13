@@ -2,20 +2,26 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Get;
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Metadata\Patch;
 use Doctrine\ORM\Mapping as ORM;
+use App\Controller\UserController;
+use App\Repository\UserRepository;
+use ApiPlatform\Metadata\ApiResource;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ApiResource()]
+#[ApiResource(
+    normalizationContext: ['groups' => ['read']],
+    denormalizationContext: ['groups' => ['write']],
+)]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[Patch(
     uriTemplate: '/users/achat-coins/{id}',
-    name: 'app_user_achat_coins',
+    controller: UserController::class,
+    name: 'user_achat_coins',
 )]
 
 class User
@@ -31,6 +37,7 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
+    #[Groups(['read', 'write'])]
     #[ORM\Column]
     private ?int $nb_coin = null;
 
