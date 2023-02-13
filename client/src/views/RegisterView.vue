@@ -1,4 +1,38 @@
-<script setup>
+<script>
+import axios from 'axios';
+export default {
+  data() {
+    return {
+      // Form data here
+        formData: {
+            email: '',
+            password: '',
+        }
+    }
+  },
+  methods: {
+    async function (submitForm) {
+      try {
+        const response = await axios.get('https://localhost/plantes', {
+          'headers': {
+            'Content-Type': 'application/json',
+            'accept': 'application/json'
+          },
+        }, {
+          params: {
+            email: this.formData.email,
+            password: this.formData.password
+          }
+        });
+        this.data = response.data;
+        console.log(this.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+  }
+}
 </script>
 
 <template>
@@ -12,11 +46,9 @@
                 <label for="password" class="form__label">Password</label>
                 <input type="password" id="password" class="form__input" />
             </div>
-            <div class="form__group">
-                <label for="password" class="form__label">Confirm Password</label>
-                <input type="password" id="password" class="form__input" />
-            </div>
-            <button class="btn btn-success">Register</button>
+            
+            <button @click="submitForm">Register</button>
+            
             <div>
                 <p>Already have an account? <router-link to="/">Login</router-link></p>
             </div>

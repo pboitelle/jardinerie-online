@@ -26,6 +26,7 @@ class RegisterController extends AbstractController
     public function __invoke()
     {
         dd("function __invoke");
+
         $request = $this->requestStack->getCurrentRequest();
         $em = $this->managerRegistry->getManager();
 
@@ -45,6 +46,7 @@ class RegisterController extends AbstractController
 
         $user->setIsPasswordRequest(false);
         $user->setPassword($hashedPassword);
+
     }
 
     public function signUpHandler(SignUpRequest $signUpRequest): JsonResponse
