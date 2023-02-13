@@ -2,4 +2,3 @@
 /helm/api-platform/charts/*
 !/helm/api-platform/charts/.gitignore
 /.github/*  # GitHub Actions
-/.github/workflows/ci.yaml
