@@ -1,8 +1,8 @@
-# api/config/routes.yaml
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
 auth:
     path: /auth
     methods: ['POST']
-
-# config/routes.yaml
-api_login_check:
-    path: /api/login_check

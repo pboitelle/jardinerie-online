@@ -5,10 +5,15 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Controller\RegisterController;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+
+
 
 #[ApiResource()]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -19,6 +24,13 @@ use Doctrine\ORM\Mapping as ORM;
     denormalizationContext: ['groups' => ['user:write']],
     name: 'app_user_achat_coins',
 )]
+#[ApiResource(operations: [
+    new Post (
+        name: 'register',
+        uriTemplate: '/register',
+        controller: RegisterController::class,
+    )
+])]
 
 class User
 {
@@ -39,11 +51,11 @@ class User
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $role = null;
+    #[ORM\Column(type: 'json')]
+    private $roles = [];
 
     #[ORM\OneToOne(inversedBy: 'user_id', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Inventory $inventory = null;
 
     #[ORM\ManyToOne(inversedBy: 'user_id')]
@@ -110,14 +122,18 @@ class User
         return $this;
     }
 
-    public function getRole(): ?string
+    public function getRoles(): array
     {
-        return $this->role;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
     }
 
-    public function setRole(string $role): self
+    public function setRoles(array $roles): self
     {
-        $this->role = $role;
+        $this->roles = $roles;
 
         return $this;
     }
