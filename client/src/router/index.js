@@ -4,6 +4,7 @@ import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import GardenView from '../views/GardenView.vue'
 import AchatCoinsView from '../views/AchatCoinsView.vue'
+import MarketView from '../views/MarketView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -41,6 +42,13 @@ const router = createRouter({
       name: 'blog-post',
       component: () => import('../views/BlogPostView.vue')
     },
+    {
+      path: '/market',
+      name: 'market',
+      component: MarketView
+    },
+    // component sert à charger le composant associé à la route (vue) et le nom sert à l'appeler dans le code (router-link) et le path sert à l'appeler dans l'url
+
     // {
     //   path: '/account',
     //   component: () => import('../views/AccountView.vue'),

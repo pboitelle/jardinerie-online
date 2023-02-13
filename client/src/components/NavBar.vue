@@ -26,7 +26,7 @@ import { RouterLink } from 'vue-router'
                         <RouterLink to="#" class="nav-link">Mon Jardin</RouterLink>
                     </li>
                     <li class="nav-item">
-                        <RouterLink to="#" class="nav-link">Marché des plantes</RouterLink>
+                        <RouterLink to="/market" class="nav-link">Marché des plantes</RouterLink>
                     </li>
                     <li class="nav-item">
                         <RouterLink to="/blog" class="nav-link">Blog</RouterLink>
