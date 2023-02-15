@@ -23,7 +23,7 @@ import { RouterLink } from 'vue-router'
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <RouterLink to="#" class="nav-link">Mon Jardin</RouterLink>
+                        <RouterLink to="/garden" class="nav-link">Mon Jardin</RouterLink>
                     </li>
                     <li class="nav-item">
                         <RouterLink to="/market" class="nav-link">Marché des plantes</RouterLink>
